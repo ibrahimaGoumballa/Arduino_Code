@@ -1,0 +1,19 @@
+| Composant             | Broche sur mKrwan 1310 |
+|-----------------------|------------------------|
+
+
+| Capteur à ultrasons   |                        |
+| TRIGGER_PIN           | A2                     |
+| ECHO_PIN              | A3                     |
+
+| Servomoteur           |                        |
+| Signal du servomoteur | A6                     |
+
+| Moteurs à courant continu |                    |
+| ena                   | 6                      |
+| in1                   | 2                      |
+| in2                   | 3                      |
+| in3                   | 4                      |
+| in4                   | 5                      |
+| enb                   | 7                      |
+
