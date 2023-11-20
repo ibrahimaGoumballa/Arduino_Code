@@ -87,7 +87,9 @@ void loop() {
     Serial.println("Est-il dans ZONE ?");
     if (!dansZone) {
     Serial.print(dansZone);
-    Serial.print("--> NON");
+    Serial.println("--> NON");
+    }else {
+    Serial.println("--> OUI");
     }
     delay(300);
   }
