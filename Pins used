@@ -17,3 +17,7 @@
 | in4                   | 5                      |
 | enb                   | 7                      |
 
+| Capteur poids         |                        |
+| Vcc                   | Vcc                    |
+| DT                    | 1                       |
+| SCK                   | 0                       |
