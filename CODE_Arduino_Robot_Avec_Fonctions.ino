@@ -1,5 +1,5 @@
 /*
- //IBRAHIMA G : Logigramme VERSION FINI 1
+ //IBRAHIMA G : Logigramme VERSION 2
  * +----------------------------------+
 |             DÉMARRAGE             |
 +----------------------------------+
@@ -73,7 +73,10 @@ void loop() {
   } else {
     while (true) {
       Serial.println("OBSTACLE");
+      reculer();
+      delay(500);
       trouverMonChemin();
+      delay(500);
       avancer();
       break;
     }
@@ -173,8 +176,7 @@ int VoieLibreADroite() {
 //Fonction permettant de trouver le chemin une fois un obstacle detecter 
 void trouverMonChemin() {
   arret(); // Arrêt
-  delay(500);
- // reculer();
+  delay(1000);
   int distanceAGauche = VoieLibreAGauche(); // Mesure de la disponibilité de la voie à gauche
   Serial.println("DISTANCE A GAUCHE");
   Serial.println(distanceAGauche);
@@ -184,11 +186,11 @@ void trouverMonChemin() {
 
   if (distanceAGauche < distanceADroite) {
     tourneragauche(); // Tourner à gauche
-    delay(500);
+    delay(650);
     regarderdevant();
   } else {
     tourneradroite(); // Tourner à droite
-    delay(500);
+    delay(650);
     regarderdevant();
   }
- }
+}
