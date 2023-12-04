@@ -1,36 +1,4 @@
-/*
- //IBRAHIMA G : Logigramme VERSION 2
- * +----------------------------------+
-|             DÉMARRAGE             |
-+----------------------------------+
-           |
-           V
-+----------------------------------+
-|  MESURE DE LA DISTANCE           |
-|     (mesurerDistance())          |
-+----------------------------------+
-           |
-           V
-+----------------------------------+
-|  SI distance < 500 ALORS         |
-|     Avancer()                    |
-+----------------------------------+
-|      |                           |
-|      | (Sinon, si distance >= 500)|
-|      V                           |
-+----------------------------------+
-|  TANT QUE true                   |
-|      trouverMonChemin()          |
-|      SI chemin trouvé ALORS       |
-|          Avancer()                |
-+----------------------------------+
-           |
-           V
-+----------------------------------+
-|     RETOUR À LA MESURE           |
-+----------------------------------+
-*/
-
+//IBRAHIMA G : Logigramme VERSION 2
 
 #include <Servo.h>
 
@@ -178,10 +146,10 @@ void trouverMonChemin() {
   arret(); // Arrêt
   delay(1000);
   int distanceAGauche = VoieLibreAGauche(); // Mesure de la disponibilité de la voie à gauche
-  Serial.println("DISTANCE A GAUCHE");
+  Serial.print("DISTANCE A GAUCHE ");
   Serial.println(distanceAGauche);
   int distanceADroite = VoieLibreADroite(); // Mesure de la disponibilité de la voie à droite
-  Serial.println("DISTANCE A DROITE");
+  Serial.print("DISTANCE A DROITE ");
   Serial.println(distanceADroite);
 
   if (distanceAGauche < distanceADroite) {
