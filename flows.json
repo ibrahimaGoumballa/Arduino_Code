@@ -1,0 +1,479 @@
+[
+    {
+        "id": "a061f550da77e8b3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "38629d8c2b3f01dd",
+        "type": "mqtt in",
+        "z": "a061f550da77e8b3",
+        "name": "",
+        "topic": "v3/tamicycle@ttn/devices/eui-a8610a3230315f17",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "689a0938a60145d7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "ea1be0a517092b90",
+                "50f04c262beecca8",
+                "2657921b482fab16",
+                "2d36f8044714f643",
+                "6e6e0c402e9b0cb3"
+            ]
+        ]
+    },
+    {
+        "id": "cf74a6211748ec4f",
+        "type": "debug",
+        "z": "a061f550da77e8b3",
+        "name": "batterie",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "50f04c262beecca8",
+        "type": "function",
+        "z": "a061f550da77e8b3",
+        "name": "batterie",
+        "func": "msg.payload = msg.payload[\"uplink_message\"]['decoded_payload']['batteryVoltage_V'];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "cf74a6211748ec4f",
+                "a124ffc00a41324e"
+            ]
+        ]
+    },
+    {
+        "id": "2657921b482fab16",
+        "type": "function",
+        "z": "a061f550da77e8b3",
+        "name": "niveau",
+        "func": "msg.payload = msg.payload[\"uplink_message\"]['decoded_payload']['liquidValue'];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 120,
+        "wires": [
+            [
+                "50d6f96644e54816",
+                "3afbf94983274e9e"
+            ]
+        ]
+    },
+    {
+        "id": "50d6f96644e54816",
+        "type": "debug",
+        "z": "a061f550da77e8b3",
+        "name": "Niveau",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "3afbf94983274e9e",
+        "type": "ui_level",
+        "z": "a061f550da77e8b3",
+        "group": "950e6a141f99394e",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "niveau",
+        "colorHi": "#e60000",
+        "colorWarn": "#ff9900",
+        "colorNormal": "#00b33c",
+        "colorOff": "#595959",
+        "min": 0,
+        "max": 100,
+        "segWarn": "",
+        "segHigh": "",
+        "unit": "",
+        "layout": "sh",
+        "channelA": "",
+        "channelB": "",
+        "decimals": 0,
+        "animations": "soft",
+        "shape": 2,
+        "colorschema": "fixed",
+        "textoptions": "default",
+        "colorText": "#eeeeee",
+        "fontLabel": "",
+        "fontValue": "",
+        "fontSmall": "",
+        "colorFromTheme": true,
+        "textAnimations": false,
+        "hideValue": false,
+        "tickmode": "off",
+        "peakmode": false,
+        "property": "payload",
+        "peaktime": 3000,
+        "x": 810,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a124ffc00a41324e",
+        "type": "ui_artlessgauge",
+        "z": "a061f550da77e8b3",
+        "group": "950e6a141f99394e",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "icon": "",
+        "label": "batterie",
+        "unit": "%",
+        "layout": "linear",
+        "decimals": "2",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "payload",
+        "secondary": "secondary",
+        "inline": true,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#ff0033",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 100,
+                "col": "#ff0033",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": 3,
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 840,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "ea1be0a517092b90",
+        "type": "function",
+        "z": "a061f550da77e8b3",
+        "name": "poids",
+        "func": "msg.payload = msg.payload[\"uplink_message\"]['decoded_payload']['weight'];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 260,
+        "wires": [
+            [
+                "e02d5adb65cf59ae"
+            ]
+        ]
+    },
+    {
+        "id": "2d36f8044714f643",
+        "type": "function",
+        "z": "a061f550da77e8b3",
+        "name": "latitude",
+        "func": "msg.payload = msg.payload[\"uplink_message\"]['decoded_payload']['latitude'];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 320,
+        "wires": [
+            [
+                "9237f9080e4e4c84"
+            ]
+        ]
+    },
+    {
+        "id": "6e6e0c402e9b0cb3",
+        "type": "function",
+        "z": "a061f550da77e8b3",
+        "name": "longitude",
+        "func": "msg.payload = msg.payload[\"uplink_message\"]['decoded_payload']['longitude'];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "77664a839802ea05"
+            ]
+        ]
+    },
+    {
+        "id": "e02d5adb65cf59ae",
+        "type": "ui_artlessgauge",
+        "z": "a061f550da77e8b3",
+        "group": "950e6a141f99394e",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "icon": "",
+        "label": "poids",
+        "unit": "g",
+        "layout": "linear",
+        "decimals": "2",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "payload",
+        "secondary": "secondary",
+        "inline": true,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#ff9900",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 10,
+                "col": "#ff9900",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": 3,
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 840,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "9237f9080e4e4c84",
+        "type": "ui_artlessgauge",
+        "z": "a061f550da77e8b3",
+        "group": "950e6a141f99394e",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "icon": "",
+        "label": "latitude",
+        "unit": "",
+        "layout": "linear",
+        "decimals": "8",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "payload",
+        "secondary": "secondary",
+        "inline": true,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#ff9900",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 10,
+                "col": "#ff9900",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": 3,
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 840,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "77664a839802ea05",
+        "type": "ui_artlessgauge",
+        "z": "a061f550da77e8b3",
+        "group": "950e6a141f99394e",
+        "order": 9,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "icon": "",
+        "label": "longitude",
+        "unit": "",
+        "layout": "linear",
+        "decimals": "8",
+        "differential": false,
+        "minmax": false,
+        "colorTrack": "#555555",
+        "style": "",
+        "colorFromTheme": true,
+        "property": "payload",
+        "secondary": "secondary",
+        "inline": true,
+        "animate": true,
+        "sectors": [
+            {
+                "val": 0,
+                "col": "#ff9900",
+                "t": "min",
+                "dot": 0
+            },
+            {
+                "val": 10,
+                "col": "#ff9900",
+                "t": "max",
+                "dot": 0
+            }
+        ],
+        "lineWidth": 3,
+        "bgcolorFromTheme": true,
+        "diffCenter": "",
+        "x": 840,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "7ea39108a55635ba",
+        "type": "ui_spacer",
+        "z": "a061f550da77e8b3",
+        "name": "spacer",
+        "group": "e415b48fcd1f55ca",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "57c07c6103dfc76b",
+        "type": "ui_spacer",
+        "z": "a061f550da77e8b3",
+        "name": "spacer",
+        "group": "950e6a141f99394e",
+        "order": 2,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "ad8e2d3cc45d92ca",
+        "type": "ui_spacer",
+        "z": "a061f550da77e8b3",
+        "name": "spacer",
+        "group": "950e6a141f99394e",
+        "order": 4,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "ad8059c70faf424e",
+        "type": "ui_spacer",
+        "z": "a061f550da77e8b3",
+        "name": "spacer",
+        "group": "950e6a141f99394e",
+        "order": 6,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "805e82a1c9dc9bf3",
+        "type": "ui_spacer",
+        "z": "a061f550da77e8b3",
+        "name": "spacer",
+        "group": "950e6a141f99394e",
+        "order": 8,
+        "width": 6,
+        "height": 1
+    },
+    {
+        "id": "689a0938a60145d7",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "eu1.cloud.thethings.network",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "950e6a141f99394e",
+        "type": "ui_group",
+        "name": "Système de tamisage",
+        "tab": "a1ff3b3b1510792a",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "a1ff3b3b1510792a",
+        "type": "ui_tab",
+        "name": "Tamicycle",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
