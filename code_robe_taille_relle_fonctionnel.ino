@@ -64,8 +64,8 @@ void setup() {
   pinMode(ECHO_PIN_2, INPUT);
   
   
-  myservo1.attach(A6);
-  myservo2.attach(A5);
+  myservo1.attach(A5);
+  myservo2.attach(A6);
   pinMode(ena, OUTPUT);  
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
@@ -87,15 +87,17 @@ void setup() {
   }
 }*/
 void loop() {
-  regarderdevant();
-  delay(1000);
-  regarderadroite();
-  delay(1000);
-  regarderagauche();
-  delay(1000);
-  VoieLibreAGauche();
-  delay(1000);
-  VoieLibreADroite();
+  // regarderdevant();
+  // delay(1000);
+  // regarderadroite();
+  // delay(1000);
+  // regarderagauche();
+  // delay(1000);
+  // VoieLibreAGauche();
+  // delay(1000);
+  // VoieLibreADroite();
+  reculer();
+
   
 
 /*  float distance1 = mesurerDistance1();
@@ -149,7 +151,7 @@ void arret(){
   analogWrite(enb, 0);  
 }
 
-void avancer(){
+void reculer(){
   digitalWrite(in1, 1);
   digitalWrite(in2, 0);
   digitalWrite(in3, 0);
@@ -161,22 +163,22 @@ void avancer(){
 void tourneradroite(){
   digitalWrite(in1, 0);
   digitalWrite(in2, 0);
-  digitalWrite(in3, 0);
-  digitalWrite(in4, 1);  
+  digitalWrite(in3, 1);
+  digitalWrite(in4, 0);  
   analogWrite(ena, 0);
   analogWrite(enb, vitesse);
 }
 
 void tourneragauche(){
-  digitalWrite(in1, 1);
-  digitalWrite(in2, 0);
+  digitalWrite(in1, 0);
+  digitalWrite(in2, 1);
   digitalWrite(in3, 0);
   digitalWrite(in4, 0);
   analogWrite(ena, vitesse);
   analogWrite(enb, 0);    
 }
 
-void reculer(){
+void avancer(){
   digitalWrite(in1, 0);
   digitalWrite(in2, 1);
   digitalWrite(in3, 1);
