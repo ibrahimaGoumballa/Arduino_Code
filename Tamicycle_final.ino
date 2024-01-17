@@ -1,25 +1,3 @@
-void trouverMonChemin() {
-  arret();
-  int distanceAGauche = VoieLibreAGauche();
-  Serial.print("DISTANCE A GAUCHE ");
-  Serial.println(distanceAGauche);
-  int distanceADroite = VoieLibreADroite();
-  Serial.print("DISTANCE A DROITE ");
-  Serial.println(distanceADroite);
-
-  delay(2000);
-  regarderdevant();
-  
-  if (distanceAGauche < distanceADroite) {
-    tourneragauche();
-    delay(1000);
-    avancer();
-  } 
-  else {
-    tourneradroite();
-    delay(1000);
-    avancer();
-  }
 //BIBLIO
 #include <MKRWAN.h>
 #include <HX711.h> //Poids
@@ -41,10 +19,10 @@ String appSKey;
 
 // POIDS
 HX711 scale;
-float calibration_factor = 21067; // for 16,6 -> 21067 and for ~93,5 -> 21387
+float calibration_factor = 21900; // for 16,6 -> 21067 and for ~93,5 -> 21387
 float meas, p;
 
-float real_meas = 134.20;
+float real_meas;
 float pourcentage = 15.38;        //la charge de la batterie en pourcentage
 float latitude =   55.8450559;
 float longitude  = 7.3556285;
@@ -97,7 +75,7 @@ void setup() {
   pinMode(in3, OUTPUT);
   pinMode(in4, OUTPUT);
   pinMode(enb, OUTPUT);
-  vitesse = 400;
+  vitesse = 800;
   delay(1000);
 /*
   if (!modem.begin(EU868)) {
@@ -130,38 +108,23 @@ void setup() {
   var_battery = (short)(pourcentage*100);
   Serial.print("Valeur batterie envoyer  : ");
   Serial.println(var_battery);
-
-  // Serial.println("HX711 calibration sketch");
-  // Serial.println("Remove all weight from scale");
-  // Serial.println("After readings begin, place known weight on scale");
-  // Serial.println("Press + or a to increase calibration factor");
-  // Serial.println("Press - or z to decrease calibration factor");
+/*
+   Serial.println("HX711 calibration sketch");
+   Serial.println("Remove all weight from scale");
+   Serial.println("After readings begin, place known weight on scale");
+   Serial.println("Press + or a to increase calibration factor");
+   Serial.println("Press - or z to decrease calibration factor");
   
-  // scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-  // scale.set_scale();
-  // scale.tare(); //Reset the scale to 0
+   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+   scale.set_scale();
+   scale.tare(); //Reset the scale to 0
   
-  // long zero_factor = scale.read_average(); //Get a baseline reading
-  // Serial.print("Zero factor: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
-  // Serial.println(zero_factor);  
+   long zero_factor = scale.read_average(); //Get a baseline reading
+   Serial.print("Zero factor: "); //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
+   Serial.println(zero_factor);  
   // // Pin capteur de niveau
-  // pinMode(A0, INPUT);
-
-  // scale.set_scale(calibration_factor); //Adjust to this calibration factor
-  // Serial.print("Reading: ");
-  // meas = scale.get_units(10);
-  // Serial.print(meas);
-  // p = meas/10;
-  // Serial.print(p);
-  // Serial.print(" kg "); //Change this to kg and re-adjust the calibration factor if you follow SI units like a sane person
-  // real_meas = p*1000;
-  // Serial.println(" real_ms: ");
-  // Serial.println(real_meas);
-  // Serial.print(" g "); //Change this to g
-  // Serial.println(" Calibration_factor: ");
-  // Serial.println(calibration_factor);
-  // Serial.println();
-
+   pinMode(A0, INPUT);
+*/
   Serial.print("Poids mesurer : ");  // debug value
   Serial.println(real_meas);
   var_poids = (short)(real_meas*100);
@@ -197,36 +160,6 @@ void loop() {
       avancer();
     }
   }
-/*
-  int err;
-  modem.setPort(3);
-  modem.beginPacket();
-  modem.dataRate(2);
-  
-  // envoi du pourcentage de la batterie
-  modem.write(var_battery);
-  // envoi du poids
-  modem.write(var_poids);
-  // envoi liquide
-  modem.write(var_liquide);
-  // envoi latitude
-  modem.write(var_latitude);
-  // envoi longitude
-  modem.write(var_longitude);
-   
-
-  err = modem.endPacket(true);
-  if (err > 0) { //En cas d'erreur, indiquer sur moniteur serie
-    Serial.println("Message sent correctly!");
-  } else {
-    Serial.println("Error sending message :(");
-  }
-
-  //Start of Program
-  while (modem.available()) {
-    Serial.write(modem.read());
-  }
-  modem.poll();*/
 }
 
 
@@ -301,18 +234,18 @@ void avancer(){
 
 //Tourner l ultrason a gauche  
 void regarderagauche() {
-  myservo2.write(0); // Angle de rotation pour regarder à gauche (à ajuster)
+  myservo2.write(100); // Angle de rotation pour regarder à gauche (à ajuster)
   delay(500);
 }
 //Tourner l ultrason a doite  
 void regarderadroite() {
-  myservo1.write(180); // Angle de rotation pour regarder à droite (à ajuster)
+  myservo1.write(0); // Angle de rotation pour regarder à droite (à ajuster)
   delay(500);
 }
 //Tourner l ultrason devant 
 void regarderdevant() {
-  myservo1.write(90); // Angle de rotation pour regarder droit devant (à ajuster)
-  myservo2.write(90); // Angle de rotation pour regarder droit devant (à ajuster)
+  myservo1.write(120); // Angle de rotation pour regarder droit devant (à ajuster)
+  myservo2.write(0); // Angle de rotation pour regarder droit devant (à ajuster)
 }
 //Fonction permmettant de voir si la voie est libre a Gauche
 int VoieLibreAGauche() {
@@ -328,75 +261,31 @@ int VoieLibreADroite() {
   distanceADroite = mesurerDistance2(); // Mesure la distance à droite
   return distanceADroite;
 }
-/*
+
 void trouverMonChemin() {
+  reculer();
+  delay(50);
   arret();
+  delay(500);
   int distanceAGauche = VoieLibreAGauche();
   Serial.print("DISTANCE A GAUCHE ");
   Serial.println(distanceAGauche);
   int distanceADroite = VoieLibreADroite();
   Serial.print("DISTANCE A DROITE ");
   Serial.println(distanceADroite);
-
-  delay(2000);
   regarderdevant();
-  
+  delay(500);
+  avancer();
   if (distanceAGauche < distanceADroite) {
     tourneragauche();
     delay(1000);
-    avancer();
   } 
   else {
     tourneradroite();
     delay(1000);
-    avancer();
-  }*/
-
-  void trouverMonChemin() {
-  arret();
-  int distanceAGauche = VoieLibreAGauche();
-  Serial.print("DISTANCE A GAUCHE ");
-  Serial.println(distanceAGauche);
-  int distanceADroite = VoieLibreADroite();
-  Serial.print("DISTANCE A DROITE ");
-  Serial.println(distanceADroite);
-
-  delay(2000);
-  regarderdevant();
-  
-  if (distanceAGauche < distanceADroite) {
-    tourneragauche();
-    delay(1000);
-    avancer();
-  } 
-  else {
-    tourneradroite();
-    delay(1000);
-    avancer();
   }
 
-  // Continuer à vérifier et avancer si la voie est libre
-  while (true) {
-    float distance1 = mesurerDistance1();
-    float distance2 = mesurerDistance2();
-
-    if (distance1 > 500 && distance2 > 500) {
-      avancer(); // Si la voie est libre, avance
-      break; // Sort de la boucle
-    }
-  }
 }
 
-  // Continuer à vérifier et avancer si la voie est libre
-  while (true) {
-    float distance1 = mesurerDistance1();
-    float distance2 = mesurerDistance2();
-
-    if (distance1 > 500 && distance2 > 500) {
-      avancer(); // Si la voie est libre, avance
-      break; // Sort de la boucle
-    }
-  }
-}
 
 
